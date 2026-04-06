@@ -5,158 +5,97 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>McQueen Store</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-
 <style>
 body {
+  font-family: Arial;
   margin: 0;
-  font-family: 'Poppins', sans-serif;
   background: #f1f3f6;
 }
 
-/* Navbar */
-nav {
+header {
   background: #2874f0;
   color: white;
-  display: flex;
-  align-items: center;
-  padding: 10px 20px;
-  justify-content: space-between;
+  padding: 15px;
+  text-align: center;
+  font-size: 20px;
 }
 
-.logo {
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-
-.search-box {
-  width: 40%;
-}
-
-.search-box input {
-  width: 100%;
-  padding: 8px;
-  border: none;
-  border-radius: 3px;
-}
-
-.cart {
-  font-weight: bold;
-}
-
-/* Products Grid */
 .container {
-  padding: 20px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  padding: 15px;
 }
 
-/* Product Card */
 .card {
   background: white;
-  padding: 15px;
-  border-radius: 8px;
-  transition: 0.3s;
+  padding: 10px;
+  border-radius: 10px;
   text-align: center;
-}
-
-.card:hover {
-  box-shadow: 0 0 10px rgba(0,0,0,0.2);
-  transform: scale(1.03);
 }
 
 .card img {
   width: 100%;
-  height: 180px;
-  object-fit: cover;
-}
-
-.price {
-  color: green;
-  font-weight: bold;
 }
 
 button {
   background: #fb641b;
   color: white;
-  padding: 8px 15px;
   border: none;
-  cursor: pointer;
+  padding: 10px;
   margin-top: 10px;
 }
 
-/* Cart Box */
-.cart-box {
+.cart {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
   background: white;
-  margin: 20px;
-  padding: 15px;
-  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
 }
 </style>
 </head>
 
 <body>
 
-<!-- Navbar -->
-<nav>
-  <div class="logo">McQueen</div>
+<header>🛒 McQueen Store</header>
 
-  <div class="search-box">
-    <input type="text" placeholder="Search for products...">
-  </div>
-
-  <div class="cart">Cart: <span id="cart-count">0</span></div>
-</nav>
-
-<!-- Products -->
 <div class="container">
 
-  <div class="card">
-    <img src="https://i.postimg.cc/wBDG1QZ2/mcqueen-cap.jpg">
-    <h4>McQueen Cap</h4>
-    <p class="price">₹499</p>
-    <button onclick="addToCart(499)">Add to Cart</button>
-  </div>
+<div class="card">
+<img src="https://i.postimg.cc/wBDG1QZ2/mcqueen-cap.jpg">
+<h3>McQueen Cap</h3>
+<p>₹299</p>
+<button onclick="addToCart(299)">Add to Cart</button>
+</div>
 
-  <div class="card">
-    <img src="https://i.postimg.cc/wBDG1QZ2/mcqueen-cap.jpg">
-    <h4>Racing T-Shirt</h4>
-    <p class="price">₹799</p>
-    <button onclick="addToCart(799)">Add to Cart</button>
-  </div>
-
-  <div class="card">
-    <img src="https://i.postimg.cc/wBDG1QZ2/mcqueen-cap.jpg">
-    <h4>Kids McQueen Toy</h4>
-    <p class="price">₹999</p>
-    <button onclick="addToCart(999)">Add to Cart</button>
-  </div>
+<div class="card">
+<img src="https://i.postimg.cc/wBDG1QZ2/mcqueen-cap.jpg">
+<h3>McQueen T-Shirt</h3>
+<p>₹499</p>
+<button onclick="addToCart(499)">Add to Cart</button>
+</div>
 
 </div>
 
-<!-- Cart -->
-<div class="cart-box">
-  <h3>Your Cart</h3>
-  <p>Total Items: <span id="items">0</span></p>
-  <p>Total Price: ₹<span id="total">0</span></p>
+<div class="cart">
+Items: <span id="items">0</span> |
+Total: ₹<span id="total">0</span>
+<br><br>
+<button onclick="openPayment()">Checkout</button>
 </div>
 
-<script> function openPayment() {
-  document.getElementById("payment").style.display = "block";
-}
+<div id="payment" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:white; padding:20px;">
+<h2>Payment Method</h2>
+<button onclick="payUPI()">Pay with UPI</button>
+<br><br>
+<button onclick="payCard()">Pay with Card</button>
+<br><br>
+<button onclick="closePayment()">Cancel</button>
+</div>
 
-function closePayment() {
-  document.getElementById("payment").style.display = "none";
-}
-
-function payUPI() {
-  alert("Payment Successful via UPI ✅");
-}
-
-function payCard() {
-  alert("Payment Successful via Card 💳");
-  }
+<script>
 let count = 0;
 let total = 0;
 
@@ -164,11 +103,11 @@ function addToCart(price) {
   count++;
   total += price;
 
-  document.getElementById("cart-count").innerText = count;
   document.getElementById("items").innerText = count;
   document.getElementById("total").innerText = total;
 }
-</script>function openPayment() {
+
+function openPayment() {
   document.getElementById("payment").style.display = "block";
 }
 
@@ -183,25 +122,7 @@ function payUPI() {
 function payCard() {
   alert("Payment Successful via Card 💳");
 }
-<button onclick="openPayment()">Checkout</button>
-
-<div id="payment" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:white; padding:20px;">
-  <h2>Payment Method</h2>
-  <button onclick="payUPI()">Pay with UPI</button>
-  <br><br>
-  <button onclick="payCard()">Pay with Card</button>
-  <br><br>
-  <button onclick="closePayment()">Cancel</button>
-</div>
-</body>
-</html><script>
-  // saare JS functions yahan
 </script>
 
-<button onclick="openPayment()">Checkout</button>
-
-<div id="payment">
-  <!-- payment UI -->
-</div>
-
 </body>
+</html>
